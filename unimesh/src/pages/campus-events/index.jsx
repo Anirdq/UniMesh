@@ -154,10 +154,9 @@ export default function CampusEvents() {
       
       setEvents(prev => prev?.map(event => {
         if (event?.id === eventId) {
-          const attendeeChange = attendanceStatuses?.[eventId] ? -1 : 1;
           return {
             ...event,
-            event_attendees: event?.event_attendees || []
+            isAttending: !attendanceStatuses?.[eventId]
           };
         }
         return event;
@@ -334,10 +333,7 @@ export default function CampusEvents() {
                 <EventCard
                   key={event?.id}
                   event={event}
-                  isAttending={attendanceStatuses?.[event?.id] || false}
-                  currentUserId={user?.id}
                   onJoinEvent={handleJoinEvent}
-                  onEventClick={setSelectedEvent}
                   onRSVP={handleJoinEvent}
                   onViewDetails={setSelectedEvent}
                 />
@@ -348,16 +344,16 @@ export default function CampusEvents() {
 
         {selectedEvent && (
           <EventDetailModal
+            isOpen={!!selectedEvent}
             event={selectedEvent}
-            isAttending={attendanceStatuses?.[selectedEvent?.id] || false}
-            currentUserId={user?.id}
-            onJoinEvent={handleJoinEvent}
+            onRSVP={handleJoinEvent}
             onClose={() => setSelectedEvent(null)}
           />
         )}
 
         {showCreateModal && (
           <CreateEventModal
+            isOpen={showCreateModal}
             onCreateEvent={handleCreateEvent}
             onClose={() => setShowCreateModal(false)}
           />

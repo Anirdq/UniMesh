@@ -12,15 +12,15 @@ const ConnectModal = ({ isOpen, onClose, onConnect, profile }) => {
     {
       id: 'study',
       label: 'Study Partner',
-      message: `Hi ${profile?.name?.split(' ')?.[0]}, I noticed we're both studying ${profile?.major}. Would you like to form a study group?`
+      message: `Hi ${profile?.full_name?.split(' ')?.[0]}, I noticed we're both studying ${profile?.major}. Would you like to form a study group?`
     },
     {
       id: 'project',label: 'Project Collaboration',
-      message: `Hi ${profile?.name?.split(' ')?.[0]}, I'm working on a similar project and would love to collaborate. Let's connect!`
+      message: `Hi ${profile?.full_name?.split(' ')?.[0]}, I'm working on a similar project and would love to collaborate. Let's connect!`
     },
     {
       id: 'networking',label: 'General Networking',
-      message: `Hi ${profile?.name?.split(' ')?.[0]}, I'd love to connect and expand my network. Looking forward to getting to know you!`
+      message: `Hi ${profile?.full_name?.split(' ')?.[0]}, I'd love to connect and expand my network. Looking forward to getting to know you!`
     },
     {
       id: 'custom',
@@ -58,11 +58,11 @@ const ConnectModal = ({ isOpen, onClose, onConnect, profile }) => {
           <div className="flex items-center space-x-3">
             <Image
               src={profile?.avatar}
-              alt={profile?.name}
+              alt={profile?.full_name}
               className="w-10 h-10 rounded-full object-cover"
             />
             <div>
-              <h3 className="font-semibold text-card-foreground">Connect with {profile?.name}</h3>
+              <h3 className="font-semibold text-card-foreground">Connect with {profile?.full_name}</h3>
               <p className="text-sm text-muted-foreground">{profile?.major}</p>
             </div>
           </div>

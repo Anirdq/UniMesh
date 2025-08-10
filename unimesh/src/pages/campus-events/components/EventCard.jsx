@@ -10,7 +10,7 @@ const EventCard = ({ event, onRSVP, onViewDetails }) => {
   const handleRSVP = async () => {
     setIsRSVPing(true);
     try {
-      await onRSVP(event?.id, !event?.userRSVP);
+      await onRSVP(event?.id);
     } finally {
       setIsRSVPing(false);
     }
@@ -44,10 +44,10 @@ const EventCard = ({ event, onRSVP, onViewDetails }) => {
   };
 
   const getAttendanceStatus = () => {
-    if (event?.capacity && event?.attendeeCount >= event?.capacity) {
-      return event?.userRSVP ? 'confirmed' : 'waitlist';
+    if (event?.max_attendees && event?.event_attendees?.length >= event?.max_attendees) {
+      return event?.isAttending ? 'confirmed' : 'waitlist';
     }
-    return event?.userRSVP ? 'confirmed' : 'available';
+    return event?.isAttending ? 'confirmed' : 'available';
   };
 
   const attendanceStatus = getAttendanceStatus();
@@ -63,8 +63,8 @@ const EventCard = ({ event, onRSVP, onViewDetails }) => {
             className="w-full h-full object-cover"
           />
           <div className="absolute top-3 left-3">
-            <span className={cn("px-2 py-1 rounded-full text-xs font-medium", getCategoryColor(event?.category))}>
-              {event?.category}
+            <span className={cn("px-2 py-1 rounded-full text-xs font-medium", getCategoryColor(event?.event_type))}>
+              {event?.event_type}
             </span>
           </div>
           {event?.featured && (
@@ -86,7 +86,7 @@ const EventCard = ({ event, onRSVP, onViewDetails }) => {
             </h3>
             <div className="flex items-center text-muted-foreground text-sm mb-2">
               <Icon name="Calendar" size={14} className="mr-1" />
-              <span>{formatDate(event?.startDate)} at {formatTime(event?.startDate)}</span>
+              <span>{formatDate(event?.start_date)} at {formatTime(event?.start_date)}</span>
             </div>
           </div>
         </div>
@@ -100,14 +100,14 @@ const EventCard = ({ event, onRSVP, onViewDetails }) => {
           
           <div className="flex items-center text-muted-foreground text-sm">
             <Icon name="User" size={14} className="mr-2 flex-shrink-0" />
-            <span className="truncate">Organized by {event?.organizer?.name}</span>
+            <span className="truncate">Organized by {event?.organizer?.full_name || 'Unknown'}</span>
           </div>
 
           <div className="flex items-center text-muted-foreground text-sm">
             <Icon name="Users" size={14} className="mr-2 flex-shrink-0" />
             <span>
-              {event?.attendeeCount} attending
-              {event?.capacity && ` • ${event?.capacity - event?.attendeeCount} spots left`}
+              {event?.event_attendees?.length || 0} attending
+              {event?.max_attendees && ` • ${event?.max_attendees - (event?.event_attendees?.length || 0)} spots left`}
             </span>
           </div>
         </div>
@@ -129,22 +129,22 @@ const EventCard = ({ event, onRSVP, onViewDetails }) => {
           </Button>
           
           <Button
-            variant={event?.userRSVP ? "default" : "outline"}
+            variant={event?.isAttending ? "default" : "outline"}
             size="sm"
             loading={isRSVPing}
             onClick={handleRSVP}
             className="flex-1 ml-2"
-            disabled={attendanceStatus === 'waitlist' && !event?.userRSVP}
+            disabled={attendanceStatus === 'waitlist' && !event?.isAttending}
           >
-            {attendanceStatus === 'confirmed' && event?.userRSVP && (
+            {attendanceStatus === 'confirmed' && event?.isAttending && (
               <>
                 <Icon name="Check" size={14} className="mr-1" />
                 Going
               </>
             )}
-            {attendanceStatus === 'available' && !event?.userRSVP && 'RSVP'}
-            {attendanceStatus === 'waitlist' && !event?.userRSVP && 'Join Waitlist'}
-            {attendanceStatus === 'waitlist' && event?.userRSVP && (
+            {attendanceStatus === 'available' && !event?.isAttending && 'RSVP'}
+            {attendanceStatus === 'waitlist' && !event?.isAttending && 'Join Waitlist'}
+            {attendanceStatus === 'waitlist' && event?.isAttending && (
               <>
                 <Icon name="Clock" size={14} className="mr-1" />
                 Waitlisted
@@ -154,7 +154,7 @@ const EventCard = ({ event, onRSVP, onViewDetails }) => {
         </div>
 
         {/* Status Indicators */}
-        {event?.userRSVP && (
+        {event?.isAttending && (
           <div className="mt-3 pt-3 border-t border-border">
             <div className="flex items-center text-sm">
               {attendanceStatus === 'confirmed' && (

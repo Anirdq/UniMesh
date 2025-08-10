@@ -304,9 +304,10 @@ export default function DiscoveryFeed() {
         {/* Connect Modal */}
         {showConnectModal && selectedProfile && (
           <ConnectModal
+            isOpen={showConnectModal}
             profile={selectedProfile}
             onConnect={handleConnect}
-            onCancel={() => {
+            onClose={() => {
               setShowConnectModal(false);
               setSelectedProfile(null);
             }}

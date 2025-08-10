@@ -305,10 +305,16 @@ export default function StudentOrganizations() {
               {filteredOrganizations?.map((organization) => (
                 <OrganizationCard
                   key={organization?.id}
-                  organization={organization}
-                  membershipStatus={membershipStatuses?.[organization?.id] || 'none'}
+                  organization={{
+                    ...organization,
+                    isJoined: membershipStatuses?.[organization?.id] === 'member'
+                  }}
                   currentUserId={user?.id}
                   onJoinRequest={() => {
+                    setSelectedOrganization(organization);
+                    setShowJoinModal(true);
+                  }}
+                  onJoin={() => {
                     setSelectedOrganization(organization);
                     setShowJoinModal(true);
                   }}
@@ -322,10 +328,10 @@ export default function StudentOrganizations() {
 
         {selectedOrganization && !showJoinModal && (
           <OrganizationDetail
+            isOpen={!!selectedOrganization}
             organization={selectedOrganization}
-            membershipStatus={membershipStatuses?.[selectedOrganization?.id] || 'none'}
             currentUserId={user?.id}
-            onJoinRequest={() => setShowJoinModal(true)}
+            onJoin={() => setShowJoinModal(true)}
             onLeaveOrganization={handleLeaveOrganization}
             onClose={() => setSelectedOrganization(null)}
           />
@@ -333,8 +339,9 @@ export default function StudentOrganizations() {
 
         {showJoinModal && selectedOrganization && (
           <JoinRequestModal
+            isOpen={showJoinModal}
             organization={selectedOrganization}
-            onSubmit={handleJoinRequest}
+            onSubmit={(data) => handleJoinRequest(data?.organizationId, data?.message)}
             onClose={() => {
               setShowJoinModal(false);
               setSelectedOrganization(null);

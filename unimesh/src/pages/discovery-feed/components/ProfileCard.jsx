@@ -76,7 +76,7 @@ const ProfileCard = ({ profile, onConnect }) => {
             <span className="text-sm font-medium text-card-foreground">What I'm Learning</span>
           </div>
           <p className="text-sm text-muted-foreground">
-            {isExpanded ? profile?.learning : truncateText(profile?.learning, 80)}
+            {isExpanded ? (profile?.user_classes?.map(c => c?.class_name)?.join(', ') || 'No classes listed') : truncateText(profile?.user_classes?.map(c => c?.class_name)?.join(', ') || 'No classes listed', 80)}
           </p>
         </div>
 
@@ -87,24 +87,24 @@ const ProfileCard = ({ profile, onConnect }) => {
             <span className="text-sm font-medium text-card-foreground">What I'm Building</span>
           </div>
           <p className="text-sm text-muted-foreground">
-            {isExpanded ? profile?.building : truncateText(profile?.building, 80)}
+            {isExpanded ? (profile?.user_projects?.map(p => p?.project_name)?.join(', ') || 'No projects listed') : truncateText(profile?.user_projects?.map(p => p?.project_name)?.join(', ') || 'No projects listed', 80)}
           </p>
         </div>
 
         {/* Skills Tags */}
         <div className="px-4 pb-3">
           <div className="flex flex-wrap gap-1">
-            {profile?.skills?.slice(0, isExpanded ? profile?.skills?.length : 4)?.map((skill, index) => (
+            {profile?.user_skills?.slice(0, isExpanded ? profile?.user_skills?.length : 4)?.map((skill, index) => (
               <span
                 key={index}
                 className="px-2 py-1 bg-muted text-muted-foreground text-xs rounded-md"
               >
-                {skill}
+                {skill?.skill_name}
               </span>
             ))}
-            {!isExpanded && profile?.skills?.length > 4 && (
+            {!isExpanded && profile?.user_skills?.length > 4 && (
               <span className="px-2 py-1 bg-muted text-muted-foreground text-xs rounded-md">
-                +{profile?.skills?.length - 4} more
+                +{profile?.user_skills?.length - 4} more
               </span>
             )}
           </div>
@@ -118,13 +118,12 @@ const ProfileCard = ({ profile, onConnect }) => {
           </div>
           <div className="flex items-center space-x-2">
             <div className={`w-2 h-2 rounded-full ${
-              profile?.lookingFor?.priority === 'high' ? 'bg-error' :
-              profile?.lookingFor?.priority === 'medium' ? 'bg-warning' : 'bg-success'
+              profile?.looking_for ? 'bg-success' : 'bg-muted-foreground'
             }`}></div>
-            <span className="text-sm text-muted-foreground">{profile?.lookingFor?.type}</span>
+            <span className="text-sm text-muted-foreground">{profile?.looking_for || 'Open to connections'}</span>
           </div>
           {isExpanded && (
-            <p className="text-sm text-muted-foreground mt-1">{profile?.lookingFor?.description}</p>
+            <p className="text-sm text-muted-foreground mt-1">{profile?.bio || ''}</p>
           )}
         </div>
 
@@ -133,19 +132,19 @@ const ProfileCard = ({ profile, onConnect }) => {
           <div className="px-4 pb-3 border-t border-border pt-3">
             <div className="space-y-3">
               {/* Classes */}
-              {profile?.classes && profile?.classes?.length > 0 && (
+              {profile?.user_classes && profile?.user_classes?.length > 0 && (
                 <div>
                   <div className="flex items-center space-x-2 mb-2">
                     <Icon name="GraduationCap" size={14} className="text-primary" />
                     <span className="text-sm font-medium text-card-foreground">Current Classes</span>
                   </div>
                   <div className="flex flex-wrap gap-1">
-                    {profile?.classes?.map((cls, index) => (
+                    {profile?.user_classes?.map((cls, index) => (
                       <span
                         key={index}
                         className="px-2 py-1 bg-primary/10 text-primary text-xs rounded-md"
                       >
-                        {cls}
+                        {cls?.class_code}
                       </span>
                     ))}
                   </div>
@@ -153,19 +152,19 @@ const ProfileCard = ({ profile, onConnect }) => {
               )}
 
               {/* Interests */}
-              {profile?.interests && profile?.interests?.length > 0 && (
+              {profile?.user_interests && profile?.user_interests?.length > 0 && (
                 <div>
                   <div className="flex items-center space-x-2 mb-2">
                     <Icon name="Heart" size={14} className="text-error" />
                     <span className="text-sm font-medium text-card-foreground">Interests</span>
                   </div>
                   <div className="flex flex-wrap gap-1">
-                    {profile?.interests?.map((interest, index) => (
+                    {profile?.user_interests?.map((interest, index) => (
                       <span
                         key={index}
                         className="px-2 py-1 bg-error/10 text-error text-xs rounded-md"
                       >
-                        {interest}
+                        {interest?.interest_name}
                       </span>
                     ))}
                   </div>
@@ -181,11 +180,11 @@ const ProfileCard = ({ profile, onConnect }) => {
             <div className="flex items-center space-x-4 text-xs text-muted-foreground">
               <div className="flex items-center space-x-1">
                 <Icon name="Users" size={12} />
-                <span>{profile?.connections} connections</span>
+                <span>0 connections</span>
               </div>
               <div className="flex items-center space-x-1">
                 <Icon name="MapPin" size={12} />
-                <span>{profile?.location}</span>
+                <span>{profile?.university}</span>
               </div>
             </div>
             <div className="interactive">

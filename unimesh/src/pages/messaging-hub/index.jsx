@@ -368,14 +368,20 @@ export default function MessagingHub() {
         {/* Modals */}
         {showNewConversation && (
           <NewConversationModal
+            isOpen={showNewConversation}
             currentUserId={user?.id}
-            onCreateConversation={handleCreateConversation}
+            onStartConversation={(data) => handleCreateConversation(
+              data?.participants?.map(p => p?.id),
+              data?.type === 'group',
+              data?.groupName
+            )}
             onClose={() => setShowNewConversation(false)}
           />
         )}
 
         {showMemberList && selectedConversation && (
           <MemberList
+            isOpen={showMemberList}
             conversation={selectedConversation}
             currentUserId={user?.id}
             onClose={() => setShowMemberList(false)}

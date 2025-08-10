@@ -3,12 +3,12 @@ import { BrowserRouter, Routes as RouterRoutes, Route } from "react-router-dom";
 import ScrollToTop from "components/ScrollToTop";
 import ErrorBoundary from "components/ErrorBoundary";
 import NotFound from "pages/NotFound";
-import DiscoveryFeed from './pages/discovery-feed';
-import StudentOrganizations from './pages/student-organizations';
-import ProfileManagement from './pages/profile-management';
-import LoginRegister from './pages/login-register';
-import MessagingHub from './pages/messaging-hub';
-import CampusEvents from './pages/campus-events';
+import DiscoveryFeed from 'pages/discovery-feed';
+import StudentOrganizations from 'pages/student-organizations';
+import ProfileManagement from 'pages/profile-management';
+import LoginRegister from 'pages/login-register';
+import MessagingHub from 'pages/messaging-hub';
+import CampusEvents from 'pages/campus-events';
 
 const Routes = () => {
   return (
@@ -17,7 +17,7 @@ const Routes = () => {
       <ScrollToTop />
       <RouterRoutes>
         {/* Define your route here */}
-        <Route path="/" element={<CampusEvents />} />
+        <Route path="/" element={<LoginRegister />} />
         <Route path="/discovery-feed" element={<DiscoveryFeed />} />
         <Route path="/student-organizations" element={<StudentOrganizations />} />
         <Route path="/profile-management" element={<ProfileManagement />} />

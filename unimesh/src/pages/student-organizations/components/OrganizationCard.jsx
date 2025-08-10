@@ -5,20 +5,6 @@ import Image from '../../../components/AppImage';
 import Button from '../../../components/ui/Button';
 
 const OrganizationCard = ({ organization, onJoin, onViewDetails, currentUser }) => {
-  const {
-    id,
-    name,
-    logo,
-    category,
-    memberCount,
-    description,
-    isJoined,
-    joinType,
-    activityLevel,
-    lastActivity,
-    tags
-  } = organization;
-
   const getActivityColor = (level) => {
     switch (level) {
       case 'high': return 'text-success';
@@ -74,22 +60,22 @@ const OrganizationCard = ({ organization, onJoin, onViewDetails, currentUser }) 
         <div className="flex items-center space-x-3">
           <div className="w-12 h-12 rounded-lg overflow-hidden bg-muted flex-shrink-0">
             <Image 
-              src={logo} 
-              alt={`${name} logo`}
+              src={organization?.logo_url} 
+              alt={`${organization?.name} logo`}
               className="w-full h-full object-cover"
             />
           </div>
           <div className="min-w-0 flex-1">
             <h3 className="font-semibold text-card-foreground text-lg truncate">
-              {name}
+              {organization?.name}
             </h3>
             <div className="flex items-center space-x-2 mt-1">
-              <span className={cn("px-2 py-1 rounded-full text-xs font-medium", getCategoryColor(category))}>
-                {category}
+              <span className={cn("px-2 py-1 rounded-full text-xs font-medium", getCategoryColor(organization?.category))}>
+                {organization?.category}
               </span>
               <div className="flex items-center text-muted-foreground text-sm">
                 <Icon name="Users" size={14} className="mr-1" />
-                <span>{memberCount} members</span>
+                <span>{organization?.organization_members?.length || 0} members</span>
               </div>
             </div>
           </div>
@@ -98,23 +84,23 @@ const OrganizationCard = ({ organization, onJoin, onViewDetails, currentUser }) 
         {/* Activity Indicator */}
         <div className="flex items-center space-x-1">
           <Icon 
-            name={getActivityIcon(activityLevel)} 
+            name={getActivityIcon('medium')} 
             size={16} 
-            className={cn(getActivityColor(activityLevel))}
+            className={cn(getActivityColor('medium'))}
           />
           <span className={cn("text-xs", getActivityColor(activityLevel))}>
-            {formatLastActivity(lastActivity)}
+            Active recently
           </span>
         </div>
       </div>
       {/* Description */}
       <p className="text-muted-foreground text-sm mb-4 line-clamp-2">
-        {description}
+        {organization?.description}
       </p>
       {/* Tags */}
-      {tags && tags?.length > 0 && (
+      {organization?.tags && organization?.tags?.length > 0 && (
         <div className="flex flex-wrap gap-2 mb-4">
-          {tags?.slice(0, 3)?.map((tag, index) => (
+          {organization?.tags?.slice(0, 3)?.map((tag, index) => (
             <span 
               key={index}
               className="px-2 py-1 bg-muted text-muted-foreground text-xs rounded-md"
@@ -122,9 +108,9 @@ const OrganizationCard = ({ organization, onJoin, onViewDetails, currentUser }) 
               {tag}
             </span>
           ))}
-          {tags?.length > 3 && (
+          {organization?.tags?.length > 3 && (
             <span className="px-2 py-1 bg-muted text-muted-foreground text-xs rounded-md">
-              +{tags?.length - 3} more
+              +{organization?.tags?.length - 3} more
             </span>
           )}
         </div>
@@ -136,28 +122,19 @@ const OrganizationCard = ({ organization, onJoin, onViewDetails, currentUser }) 
           <span>Weekly meetings</span>
         </div>
         
-        {isJoined ? (
+        {organization?.isJoined ? (
           <Button variant="outline" size="sm" disabled>
             <Icon name="Check" size={16} className="mr-2" />
             Joined
           </Button>
         ) : (
           <Button 
-            variant={joinType === 'open' ? 'default' : 'outline'} 
+            variant="default"
             size="sm"
             onClick={handleJoinClick}
           >
-            {joinType === 'open' ? (
-              <>
-                <Icon name="Plus" size={16} className="mr-2" />
-                Join
-              </>
-            ) : (
-              <>
-                <Icon name="Send" size={16} className="mr-2" />
-                Request
-              </>
-            )}
+            <Icon name="Plus" size={16} className="mr-2" />
+            Join
           </Button>
         )}
       </div>
