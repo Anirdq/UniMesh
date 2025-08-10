@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Icon from '../../../components/AppIcon';
+import { cn } from '../../../utils/cn';
 import Image from '../../../components/AppImage';
 import Button from '../../../components/ui/Button';
 
@@ -62,7 +63,7 @@ const EventCard = ({ event, onRSVP, onViewDetails }) => {
             className="w-full h-full object-cover"
           />
           <div className="absolute top-3 left-3">
-            <span className={`px-2 py-1 rounded-full text-xs font-medium ${getCategoryColor(event?.category)}`}>
+            <span className={cn("px-2 py-1 rounded-full text-xs font-medium", getCategoryColor(event?.category))}>
               {event?.category}
             </span>
           </div>

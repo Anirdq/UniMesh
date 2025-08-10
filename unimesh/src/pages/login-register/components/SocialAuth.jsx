@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { cn } from '../../../utils/cn';
 import Button from '../../../components/ui/Button';
 
 
@@ -41,7 +42,7 @@ const SocialAuth = ({ onSuccess }) => {
           loading={loadingProvider === 'google'}
           iconName="Chrome"
           iconPosition="left"
-          className="w-full"
+          className={cn("w-full")}
         >
           Google
         </Button>
@@ -52,7 +53,7 @@ const SocialAuth = ({ onSuccess }) => {
           loading={loadingProvider === 'microsoft'}
           iconName="Square"
           iconPosition="left"
-          className="w-full"
+          className={cn("w-full")}
         >
           Microsoft
         </Button>

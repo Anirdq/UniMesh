@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Icon from '../../../components/AppIcon';
+import { cn } from '../../../utils/cn';
 import Button from '../../../components/ui/Button';
 import Input from '../../../components/ui/Input';
 import Select from '../../../components/ui/Select';
@@ -121,7 +122,7 @@ const SkillsInterestsSection = ({ skillsData, onSkillsChange, className = '' }) 
                       return (
                         <div
                           key={skill?.id}
-                          className="flex items-center justify-between bg-card rounded-lg p-3 border border-border"
+                          className={cn("flex items-center justify-between bg-card rounded-lg p-3 border border-border")}
                         >
                           <div className="flex-1">
                             <div className="flex items-center justify-between mb-2">

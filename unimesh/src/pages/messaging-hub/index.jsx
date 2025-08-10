@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { cn } from "../../utils/cn";
 import { MessageSquare, Users, Search, Plus } from "lucide-react";
 import Header from "../../components/ui/Header";
 import ConversationList from "./components/ConversationList";

@@ -1,4 +1,5 @@
 import React from 'react';
+import { cn } from '../../../utils/cn';
 import Icon from '../../../components/AppIcon';
 
 const CategoryFilter = ({ categories, selectedCategory, onCategoryChange, organizationCounts }) => {
@@ -30,23 +31,23 @@ const CategoryFilter = ({ categories, selectedCategory, onCategoryChange, organi
           <button
             key={category?.value}
             onClick={() => onCategoryChange(category?.value)}
-            className={`flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-smooth ${
+            className={cn("flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-smooth",
               isSelected
                 ? 'bg-primary text-primary-foreground shadow-sm'
                 : 'bg-muted text-muted-foreground hover:bg-muted/80 hover:text-foreground'
-            }`}
+            )}
           >
             <Icon 
               name={categoryIcons?.[category?.value]} 
               size={16} 
-              className={`mr-2 ${isSelected ? '' : categoryColors?.[category?.value]}`}
+              className={cn("mr-2", !isSelected && categoryColors?.[category?.value])}
             />
             <span>{category?.label}</span>
-            <span className={`ml-2 px-2 py-0.5 rounded-full text-xs ${
+            <span className={cn("ml-2 px-2 py-0.5 rounded-full text-xs",
               isSelected 
                 ? 'bg-primary-foreground/20 text-primary-foreground' 
                 : 'bg-background text-muted-foreground'
-            }`}>
+            )}>
               {count}
             </span>
           </button>

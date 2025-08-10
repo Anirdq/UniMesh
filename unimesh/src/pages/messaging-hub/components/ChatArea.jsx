@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Icon from '../../../components/AppIcon';
+import { cn } from '../../../utils/cn';
 import Image from '../../../components/AppImage';
 import Button from '../../../components/ui/Button';
 import Input from '../../../components/ui/Input';
@@ -379,7 +380,7 @@ const ChatArea = ({
                 setMessageText(e?.target?.value);
                 setIsComposing(e?.target?.value?.length > 0);
               }}
-              className="resize-none"
+              className="w-full resize-none border border-border rounded-lg p-2"
             />
           </div>
 

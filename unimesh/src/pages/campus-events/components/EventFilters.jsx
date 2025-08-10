@@ -1,4 +1,5 @@
 import React from 'react';
+import { cn } from '../../../utils/cn';
 import Icon from '../../../components/AppIcon';
 import Button from '../../../components/ui/Button';
 
@@ -62,7 +63,7 @@ const EventFilters = ({
               variant={selectedCategory === category?.id ? "default" : "ghost"}
               size="sm"
               onClick={() => onCategoryChange(category?.id)}
-              className="justify-start lg:w-full"
+              className={cn("justify-start", "lg:w-full")}
             >
               <Icon name={category?.icon} size={14} className="mr-2" />
               {category?.label}
@@ -80,7 +81,7 @@ const EventFilters = ({
               variant={selectedFilter === filter?.id ? "default" : "ghost"}
               size="sm"
               onClick={() => onFilterChange(filter?.id)}
-              className="justify-start lg:w-full"
+              className={cn("justify-start", "lg:w-full")}
             >
               <Icon name={filter?.icon} size={14} className="mr-2" />
               {filter?.label}

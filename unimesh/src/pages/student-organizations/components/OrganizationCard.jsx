@@ -1,5 +1,6 @@
 import React from 'react';
 import Icon from '../../../components/AppIcon';
+import { cn } from '../../../utils/cn';
 import Image from '../../../components/AppImage';
 import Button from '../../../components/ui/Button';
 
@@ -65,7 +66,7 @@ const OrganizationCard = ({ organization, onJoin, onViewDetails, currentUser }) 
 
   return (
     <div 
-      className="bg-card border border-border rounded-lg p-6 hover:shadow-interactive transition-smooth cursor-pointer"
+      className={cn("bg-card border border-border rounded-lg p-6 hover:shadow-interactive transition-smooth cursor-pointer")}
       onClick={() => onViewDetails(organization)}
     >
       {/* Header */}
@@ -83,7 +84,7 @@ const OrganizationCard = ({ organization, onJoin, onViewDetails, currentUser }) 
               {name}
             </h3>
             <div className="flex items-center space-x-2 mt-1">
-              <span className={`px-2 py-1 rounded-full text-xs font-medium ${getCategoryColor(category)}`}>
+              <span className={cn("px-2 py-1 rounded-full text-xs font-medium", getCategoryColor(category))}>
                 {category}
               </span>
               <div className="flex items-center text-muted-foreground text-sm">
@@ -99,9 +100,9 @@ const OrganizationCard = ({ organization, onJoin, onViewDetails, currentUser }) 
           <Icon 
             name={getActivityIcon(activityLevel)} 
             size={16} 
-            className={getActivityColor(activityLevel)}
+            className={cn(getActivityColor(activityLevel))}
           />
-          <span className={`text-xs ${getActivityColor(activityLevel)}`}>
+          <span className={cn("text-xs", getActivityColor(activityLevel))}>
             {formatLastActivity(lastActivity)}
           </span>
         </div>

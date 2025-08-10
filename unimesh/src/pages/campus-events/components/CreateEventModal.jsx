@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Icon from '../../../components/AppIcon';
+import { cn } from '../../../utils/cn';
 import Button from '../../../components/ui/Button';
 import Input from '../../../components/ui/Input';
 import Select from '../../../components/ui/Select';
@@ -182,9 +183,9 @@ const CreateEventModal = ({ isOpen, onClose, onCreateEvent }) => {
                 value={formData?.description}
                 onChange={(e) => handleInputChange('description', e?.target?.value)}
                 rows={4}
-                className={`w-full px-3 py-2 bg-input border rounded-lg text-sm placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-smooth resize-none ${
+                className={cn("w-full px-3 py-2 bg-input border rounded-lg text-sm placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-smooth resize-none",
                   errors?.description ? 'border-error' : 'border-border'
-                }`}
+                )}
               />
               {errors?.description && (
                 <p className="text-error text-sm mt-1">{errors?.description}</p>
