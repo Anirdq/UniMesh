@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Icon from '../../../components/AppIcon';
+import { cn } from '../../../utils/cn';
 import Image from '../../../components/AppImage';
 import Input from '../../../components/ui/Input';
 import Button from '../../../components/ui/Button';
@@ -103,17 +104,17 @@ const ConversationList = ({
             <button
               key={filter?.key}
               onClick={() => onFilterChange(filter?.key)}
-              className={`flex-1 px-3 py-2 text-sm font-medium rounded-md transition-smooth ${
+              className={cn("flex-1 px-3 py-2 text-sm font-medium rounded-md transition-smooth",
                 filterType === filter?.key
                   ? 'bg-card text-foreground shadow-sm'
                   : 'text-muted-foreground hover:text-foreground'
-              }`}
+              )}
             >
               {filter?.label}
               {filter?.count > 0 && (
-                <span className={`ml-1 text-xs ${
+                <span className={cn("ml-1 text-xs",
                   filterType === filter?.key ? 'text-muted-foreground' : 'text-muted-foreground'
-                }`}>
+                )}>
                   ({filter?.count})
                 </span>
               )}
@@ -144,9 +145,9 @@ const ConversationList = ({
               <div
                 key={conversation?.id}
                 onClick={() => onSelectConversation(conversation)}
-                className={`p-4 border-b border-border cursor-pointer transition-smooth hover:bg-muted/50 ${
+                className={cn("p-4 border-b border-border cursor-pointer transition-smooth hover:bg-muted/50",
                   isSelected ? 'bg-primary/5 border-r-2 border-r-primary' : ''
-                }`}
+                )}
               >
                 <div className="flex items-start space-x-3">
                   {/* Avatar */}

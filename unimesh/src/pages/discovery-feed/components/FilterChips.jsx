@@ -1,4 +1,5 @@
 import React from 'react';
+import { cn } from '../../../utils/cn';
 import Icon from '../../../components/AppIcon';
 
 const FilterChips = ({ activeFilters, onFilterChange, onAdvancedFilter }) => {
@@ -50,16 +51,16 @@ const FilterChips = ({ activeFilters, onFilterChange, onAdvancedFilter }) => {
             <button
               key={filter?.id}
               onClick={() => handleFilterClick(filter?.id)}
-              className={`flex items-center space-x-2 px-3 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-smooth ${
+              className={cn("flex items-center space-x-2 px-3 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-smooth", 
                 isActive(filter?.id)
                   ? 'bg-primary text-primary-foreground'
                   : 'bg-muted text-muted-foreground hover:bg-muted/80 hover:text-foreground'
-              }`}
+              )}
             >
               <Icon 
                 name={filter?.icon} 
                 size={14} 
-                className={filter?.id === 'online' && isActive(filter?.id) ? 'text-success' : ''}
+                className={cn(filter?.id === 'online' && isActive(filter?.id) && 'text-success')}
               />
               <span>{filter?.label}</span>
             </button>

@@ -1,5 +1,6 @@
 import React from 'react';
 import Icon from '../../../components/AppIcon';
+import { cn } from '../../../utils/cn';
 import Button from '../../../components/ui/Button';
 
 const EmptyState = ({ type, onAction }) => {
@@ -42,7 +43,7 @@ const EmptyState = ({ type, onAction }) => {
         <Icon 
           name={state?.icon} 
           size={24} 
-          className={`text-muted-foreground ${type === 'loading' ? 'animate-spin' : ''}`}
+          className={cn("text-muted-foreground", type === 'loading' && "animate-spin")}
         />
       </div>
       <h3 className="text-lg font-semibold text-card-foreground mb-2">

@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { cn } from '../../utils/cn';
 import Icon from '../AppIcon';
 
 const BottomNavigation = ({ notifications = [], className = '' }) => {
@@ -48,7 +49,7 @@ const BottomNavigation = ({ notifications = [], className = '' }) => {
   return (
     <>
       {/* Mobile Bottom Navigation */}
-      <nav className={`lg:hidden fixed bottom-0 left-0 right-0 bg-card border-t border-border z-navigation safe-area-inset-bottom ${className}`}>
+      <nav className={cn("lg:hidden fixed bottom-0 left-0 right-0 bg-card border-t border-border z-navigation", className)}>
         <div className="flex items-center justify-around h-16 px-2">
           {navigationItems?.map((item) => {
             const isActive = isActiveTab(item?.path);
@@ -88,7 +89,7 @@ const BottomNavigation = ({ notifications = [], className = '' }) => {
         </div>
       </nav>
       {/* Desktop Header Navigation */}
-      <nav className={`hidden lg:flex items-center space-x-1 ${className}`}>
+      <nav className={cn("hidden lg:flex items-center space-x-1", className)}>
         {navigationItems?.map((item) => {
           const isActive = isActiveTab(item?.path);
           return (
